@@ -1,12 +1,28 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
+    // バリデーション
+    
     $inquiry = $_POST['inquiry']; //提出された値の定義＋取り出し
     $name    = $_POST['name'];
     $email   = $_POST['email'];
 
-    header('Location: thanks.html');//フォーム提出後のサンクスページへの遷移記述
-    exit;
+    $error = array();
+
+    if (empty($inquiry)) {
+        $error['inquiry'] = '必ずご記入ください';
+    }
+
+    if (empty($name)) {
+        $error['name'] = '必ずご記入ください';
+    }
+
+    if (empty($error)) {
+        header('Location: thanks.html');//フォーム提出後のサンクスページへの遷移記述
+        exit;
+    }
+
+
 }
 
 ?>
@@ -20,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <h1>お問い合わせフォーム</h1>
     <form action="" method="post">
         <p>お問い合わせ内容 ※必須</p>
+        <?php 
+            
+        ?>
         <p><textarea name="inquiry" rows="10" cols="100"></textarea></p>
         <p>お名前 ※必須</p>
         <p><input type="text" name="name" vale=""></p>
