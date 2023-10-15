@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 
     if (empty($error)) {
-        $to = 'schoo.iwata@gmail.com';
+        $to = 'sniya.pagone824055@outlook.jp';
         $subject = 'お問い合わせ: ' . $name . 'さんより';
         $message = "email: \n" . $email . "\nお問い合わせ文:\n"
         mb_language('Japanese');
