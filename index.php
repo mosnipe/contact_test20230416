@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
     
     // バリデーション
-    
     $inquiry = $_POST['inquiry']; //提出された値の定義＋取り出し
     $name    = $_POST['name'];
     $email   = $_POST['email'];
@@ -31,8 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 
     if (empty($error)) {
-        header('Location: thanks.html');//フォーム提出後のサンクスページへの遷移記述
-        exit;
+        $to = 'schoo.iwata@gmail.com';
+        $subject = 'お問い合わせ: ' . $name . 'さんより';
+        $message = "email: \n" . $email . "\nお問い合わせ文:\n"
+        mb_language('Japanese');
+        mb_internal_encoding('UTF-8');
+        $flg = mb_send_mail($to, $subject, $message);
+
+        if($flg) {
+            header('Location: thanks.html');//フォーム提出後のサンクスページへの遷移記述
+            exit;
+        }
+
+        exit('お問い合わせの受付に失敗しました');
+
     }
 
 
