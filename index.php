@@ -5,8 +5,8 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    //CSRF対策
-    if (!isset($_POST['token'] || $_POST['token'] !== getToken())) {
+    // CSRF対策
+    if (!isset($_POST['token']) || $_POST['token'] !== getToken()) {
         exit('処理を正常に完了できませんでした');
     }
     
@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $inquiry = $_POST['inquiry']; //提出された値の定義＋取り出し
     $name    = $_POST['name'];
     $email   = $_POST['email'];
-
     $error = array();
 
     if (empty($inquiry)) {
