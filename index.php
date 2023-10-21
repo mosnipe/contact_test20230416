@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         mb_internal_encoding('UTF-8');
         $flg = mb_send_mail($to, $subject, $message);
 
+
         if($flg) {
             header('Location: thanks.html');//フォーム提出後のサンクスページへの遷移記述
             exit;
@@ -93,3 +94,4 @@ function h($str)
     </form>
 </body>
 </html>
+
