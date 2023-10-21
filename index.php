@@ -78,19 +78,43 @@ function getToken() {
     <title>お問い合わせフォーム</title>
 </head>
 <body>
-    <h1>お問い合わせフォーム</h1>
-    <form action="" method="post">
-        <input type="hidden" name="token" value="<?php echo getToken(); ?>">
-        <p>お問い合わせ内容 ※必須</p>
-        <?php if (isset($error['inquiry'])) echo h($error['inquiry']); ?>
-        <p><textarea name="inquiry" required rows="10" cols="100" maxlength="1000" minlength="10" placeholder="できるだけ詳しく入力して下さい (10文字以上 1000文字以内)"><?php if (isset($inquiry)) echo h($inquiry); ?></textarea></p>
-        <p>お名前 ※必須</p>
-        <?php if (isset($error['name'])) echo h($error['name']); ?>
-        <p><input type="text" name="name" required vale="<?php if (isset($name)) echo h($name); ?>" placeholder="お名前" ></p>
-        <p>ご連絡用Email ※必須</p>
-        <?php if (isset($error['email'])) echo h($error['email']); ?>
-        <p><input type="email" name="email" required vale="<?php if (isset($email)) echo h($email); ?>" placeholder="email@example.com" ></p>
-        <p><input type="submit" value="送信"></p>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせフォーム</title>
+    <link rel="stylesheet" href="style.css"> <!-- style.cssを読み込む -->
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>お問い合わせフォーム</h1>
+        <form action="" method="post">
+            <input type="hidden" name="token" value="<?php echo getToken(); ?>">
+
+            <p>お問い合わせ内容 ※必須</p>
+            <?php if (isset($error['inquiry'])) echo h($error['inquiry']); ?>
+            <textarea class="form-input" name="inquiry" required rows="10" cols="100" maxlength="1000" minlength="10"
+                placeholder="できるだけ詳しく入力して下さい (10文字以上 1000文字以内)"><?php if (isset($inquiry)) echo h($inquiry); ?></textarea>
+
+            <p>お名前 ※必須</p>
+            <?php if (isset($error['name'])) echo h($error['name']); ?>
+            <input class="form-input" type="text" name="name" required value="<?php if (isset($name)) echo h($name); ?>"
+                placeholder="お名前">
+
+            <p>ご連絡用Email ※必須</p>
+            <?php if (isset($error['email'])) echo h($error['email']); ?>
+            <input class="form-input" type="email" name="email" required value="<?php if (isset($email)) echo h($email); ?>"
+                placeholder="email@example.com">
+
+            <input class="form-button" type="submit" value="送信">
+        </form>
+    </div>
+</body>
+
+</html>
+
 </body>
 </html>
