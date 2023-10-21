@@ -1,4 +1,5 @@
 <?php
+define('MAIL_INQUIRY', 'sniya.pagone824055@outlook.jp');
 session_start();
 
 //CSRF対策
@@ -25,13 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // 注意: FILTER_VALIDATE_EMAIL は一部の有効なメールも弾きます。
+        // 案件次第では正規表現の使用も必要です。
         $error['email'] = 'メールアドレスの形式が正しくありません';
     }
 
+        // バリデーションエラーが無い場合お問い合わせを受付
     if (empty($error)) {
-        $to = 'sniya.pagone824055@outlook.jp';
-        $subject = 'お問い合わせ: ' . $name . 'さんより';
-        $message = "email: \n" . $email . "\nお問い合わせ文:\n"
+        $to      = MAIL_INQUIRY;
+        $subject = "お問い合わせ: " . $name . '様より';
+        $message = "email:\n" . $email . "\n問合せ本文:\n" . $inquiry;
         mb_language('Japanese');
         mb_internal_encoding('UTF-8');
         $flg = mb_send_mail($to, $subject, $message);
@@ -48,12 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 }
 
-/*
- * CSRF対策用の IDを作る
- */
-function getToken() {
-    return hash('sha256', session_id());
-}
+
+
 
 /*
  * HTMLの特殊文字をエスケープします
@@ -61,6 +61,13 @@ function getToken() {
 function h($str)
 {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+
+/*
+ * CSRF対策用の IDを作る
+ */
+function getToken() {
+    return hash('sha256', session_id());
 }
 
 ?>
@@ -75,20 +82,14 @@ function h($str)
     <form action="" method="post">
         <input type="hidden" name="token" value="<?php echo getToken(); ?>">
         <p>お問い合わせ内容 ※必須</p>
-        <?php 
-            if (isset($error['inquiry'])) echo h($error['inquiry']);
-        ?>
-        <p><textarea name="inquiry" rows="10" cols="100"></textarea></p>
+        <?php if (isset($error['inquiry'])) echo h($error['inquiry']); ?>
+        <p><textarea name="inquiry" required rows="10" cols="100" maxlength="1000" minlength="10" placeholder="できるだけ詳しく入力して下さい (10文字以上 1000文字以内)"><?php if (isset($inquiry)) echo h($inquiry); ?></textarea></p>
         <p>お名前 ※必須</p>
-        <?php 
-            if (isset($error['name'])) echo h($error['name']);
-        ?>
-        <p><input type="text" name="name" vale=""></p>
+        <?php if (isset($error['name'])) echo h($error['name']); ?>
+        <p><input type="text" name="name" required vale="<?php if (isset($name)) echo h($name); ?>" placeholder="お名前" ></p>
         <p>ご連絡用Email ※必須</p>
-        <?php 
-            if (isset($error['email'])) echo h($error['email']);
-        ?>
-        <p><input type="email" name="email" vale=""></p>
+        <?php if (isset($error['email'])) echo h($error['email']); ?>
+        <p><input type="email" name="email" required vale="<?php if (isset($email)) echo h($email); ?>" placeholder="email@example.com" ></p>
         <p><input type="submit" value="送信"></p>
     </form>
 </body>
