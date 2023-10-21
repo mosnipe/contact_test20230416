@@ -1,0 +1,29 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apply a modern font to h1 and p elements */
+h1, p {
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Style for the h1 element */
+h1 {
+    font-size: 2.5em; /* Adjust the font size as needed */
+    font-weight: bold;
+    color: #333; /* Text color */
+    margin-bottom: 20px; /* Spacing between h1 and other elements */
+}
+
+/* Style for the p element */
+p {
+    font-size: 1.2em; /* Adjust the font size as needed */
+    color: #555; /* Text color */
+    margin-bottom: 30px; /* Spacing between p and other elements */
+}
+
+/* Apply additional styles for the form fields as needed */
+/* For example, input fields, labels, and buttons */
